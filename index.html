@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -352,6 +353,92 @@ body::after {
 
 
 /* =========================
+   PHONE POPUP
+========================= */
+
+.phone-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0,0,0,0.75);
+}
+
+.phone-modal.active {
+    display: flex;
+}
+
+.phone-modal-content {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px 22px 22px;
+
+    background: #111810;
+    border: 3px solid #F5C542;
+    border-radius: 24px;
+
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.5);
+}
+
+.phone-modal-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #F5C542;
+    margin-bottom: 25px;
+}
+
+.phone-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 66px;
+    margin-bottom: 14px;
+
+    border: 2px solid #F5C542;
+    border-radius: 14px;
+
+    color: #F5C542;
+    background: rgba(255,255,255,0.05);
+
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 800;
+
+    transition: background 0.2s ease;
+}
+
+.phone-option:hover {
+    background: rgba(245,197,66,0.15);
+}
+
+.phone-close {
+    display: block;
+    margin: 22px auto 0;
+    padding: 12px 25px;
+
+    border: none;
+    background: transparent;
+
+    color: #F5C542;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.phone-button {
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
@@ -427,6 +514,14 @@ body::after {
     .icon svg {
         width: 25px;
         height: 25px;
+    }
+
+    .phone-modal-title {
+        font-size: 21px;
+    }
+
+    .phone-option {
+        font-size: 18px;
     }
 
 }
@@ -543,7 +638,7 @@ body::after {
         </a>
 
 
-        <!-- 3. MENU PNG -->
+        <!-- 3. MENU PDF -->
 
         <a
             class="btn"
@@ -579,11 +674,12 @@ body::after {
         </a>
 
 
-        <!-- 4. PHONE -->
+        <!-- 4. PHONE - OPENS POPUP -->
 
-        <a
-            class="btn"
-            href="tel:+302105766298"
+        <button
+            class="btn phone-button"
+            type="button"
+            onclick="openPhoneModal()"
         >
 
             <span class="icon">
@@ -620,10 +716,10 @@ body::after {
             </span>
 
             <span class="btn-text">
-                Καλέστε μας: 210 576 6298
+                Καλέστε μας
             </span>
 
-        </a>
+        </button>
 
 
         <!-- 5. GOOGLE MAPS -->
@@ -692,6 +788,82 @@ body::after {
 
 
 </div>
+
+
+<!-- =========================
+     PHONE POPUP
+========================= -->
+
+<div
+    class="phone-modal"
+    id="phoneModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="phoneModalTitle"
+    aria-hidden="true"
+    onclick="if(event.target === this) closePhoneModal()"
+>
+
+    <div class="phone-modal-content">
+
+        <div class="phone-modal-title" id="phoneModalTitle">
+            Επιλέξτε τηλέφωνο
+        </div>
+
+        <a
+            class="phone-option"
+            href="tel:+302105766298"
+        >
+            210 576 6298
+        </a>
+
+        <a
+            class="phone-option"
+            href="tel:+306970558553"
+        >
+            697 055 8553
+        </a>
+
+        <button
+            class="phone-close"
+            type="button"
+            onclick="closePhoneModal()"
+        >
+            Κλείσιμο
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openPhoneModal() {
+    const modal = document.getElementById("phoneModal");
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+
+    document.body.style.overflow = "hidden";
+}
+
+function closePhoneModal() {
+    const modal = document.getElementById("phoneModal");
+
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closePhoneModal();
+    }
+});
+
+</script>
 
 </body>
 </html>
